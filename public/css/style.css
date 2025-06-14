@@ -1,0 +1,658 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --text-color: #2c3e50;
+    --light-gray: #ecf0f1;
+    --white: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding-top: 0; /* Remover preenchimento superior do body */
+    padding-bottom: 2rem;
+    padding-left: 0; /* Remover preenchimento esquerdo do body */
+    padding-right: 0; /* Remover preenchimento direito do body */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-header {
+    width: 100%;
+    background: linear-gradient(90deg, var(--secondary-color), #2980b9); /* Gradiente azul */
+    padding: 0.8rem 2rem;
+    display: flex;
+    justify-content: center; /* Centralizar o botão de alternância */
+    align-items: center;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem; /* Espaço abaixo do cabeçalho */
+}
+
+.theme-toggle-button {
+    background: none;
+    border: none;
+    color: var(--white); /* Ícone branco para o cabeçalho */
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    outline: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.theme-toggle-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.container {
+    max-width: 700px;
+    width: 100%; /* Garantir que o contêiner ocupe toda a largura até o max-width */
+    margin: 0 auto; /* Centralizar o contêiner abaixo do cabeçalho */
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+}
+
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.2rem; /* Margem ligeiramente reduzida */
+    font-size: 1.8rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    border-radius: 2px;
+}
+
+/* Área de Exibição do QR Code (Contêiner Principal para QR e Informações) */
+.qrcode-display-area {
+    background: var(--white); /* Fundo branco como na imagem */
+    border-radius: 12px;
+    border: none; /* Sem borda para um visual mais limpo */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra para o placeholder também */
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* O placeholder para quando nenhum QR code ainda foi gerado */
+.qrcode-placeholder {
+    color: var(--primary-color);
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.qrcode-placeholder i {
+    font-size: 4rem; /* Ícone maior */
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+.qrcode-placeholder p {
+    font-size: 1.2rem; /* Texto maior */
+    color: var(--primary-color);
+}
+
+/* Contêiner da Imagem do QR Code e detalhes (o cartão branco) */
+.qr-image-container {
+    background: var(--white);
+    border-radius: 12px; /* Aumentar o border-radius para um visual mais suave */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada e elegante */
+    padding: 2rem; /* Aumentar o preenchimento para mais espaço */
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    position: relative; /* Adicionar posição relativa para contexto de posicionamento */
+}
+
+.qr-image-container img {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto 1.5rem auto; /* Aumentar margem inferior para espaçamento */
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.qr-image-container img:hover {
+    transform: none;
+}
+
+.qr-card-title {
+    color: var(--primary-color);
+    font-size: 1.8rem; /* Título maior e mais impactante */
+    font-weight: 600;
+    margin-top: 0.5rem; /* Espaço da imagem do QR code */
+    margin-bottom: 1rem; /* Espaço antes das instruções de escaneamento */
+}
+
+.scan-instructions {
+    margin-top: 0; /* Nenhuma margem superior, diretamente abaixo do título */
+    color: var(--primary-color);
+    font-size: 1.1rem; /* Instruções mais visíveis */
+    font-weight: 400; /* Reduzir peso para contraste */
+    margin-bottom: 1.5rem; /* Espaço antes do separador para detalhes da rede */
+    text-align: center;
+    max-width: 80%; /* Limitar largura para não esticar muito */
+}
+
+/* Detalhes da Rede (Nome e Senha) - Em linha com o QR */
+.network-details-inline {
+    width: 80%; /* Reduzir a largura para um visual mais contido */
+    padding-top: 1.5rem; /* Aumentar espaço e separador acima dos detalhes */
+    border-top: 2px solid var(--light-gray); /* Linha separadora mais espessa */
+    padding-bottom: 0;
+    margin-top: 0; 
+    margin-bottom: 0;
+    text-align: left; /* Alinhar texto dentro dos detalhes */
+    box-sizing: border-box;
+}
+
+/* Estilos Comuns para Grupo de Informações */
+.info-group {
+    display: flex;
+    flex-direction: column; /* Empilhar ícone e texto */
+    align-items: flex-start; /* Alinhar texto à esquerda */
+    padding: 0.8rem 0; /* Preenchimento ajustado para melhor espaçamento */
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.info-group:last-child {
+    border-bottom: none;
+}
+
+.info-group i {
+    font-size: 1.5rem; /* Ícone maior */
+    color: var(--secondary-color);
+    margin-right: 0.5rem; /* Espaço menor à direita */
+    width: auto; /* Deixar largura automática */
+    text-align: left;
+}
+
+.info-group span {
+    font-size: 1.2rem; /* Texto maior para nome/senha */
+    color: var(--primary-color);
+    font-weight: 600; /* Negrito para os valores */
+    margin-left: 0; /* Remover margem extra */
+}
+
+/* Área de Mensagem de Erro */
+.error-message-area {
+    color: var(--accent-color);
+    background: #fde8e8;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.error-message-area i {
+    margin-right: 0.5rem;
+}
+
+/* Classes de utilidade para controle de exibição */
+.hidden {
+    display: none !important;
+}
+
+.flex-display {
+    display: flex !important;
+}
+
+.block-display {
+    display: block !important;
+}
+
+/* Estilos do Formulário */
+.form-group {
+    margin-bottom: 0.8rem;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+input, select {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    background: var(--white);
+}
+
+input:disabled {
+    background-color: var(--light-gray);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+input::placeholder {
+    color: #95a5a6;
+}
+
+button {
+    background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    width: 100%;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .main-header {
+        padding: 0.6rem 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .theme-toggle-button {
+        font-size: 1.3rem;
+        padding: 0.4rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .qrcode-display-area {
+        padding: 1rem;
+        min-height: 200px;
+        margin-bottom: 1rem;
+    }
+
+    .qr-image-container {
+        padding: 1rem;
+    }
+
+    button {
+        padding: 0.7rem 1.5rem;
+    }
+
+    input, select {
+        padding: 0.5rem 0.8rem;
+    }
+}
+
+/* Estilos do Modo Escuro */
+body.dark-mode {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #ecf0f1;
+}
+
+body.dark-mode .container,
+body.dark-mode .qr-image-container,
+body.dark-mode .network-details-inline {
+    background-color: #34495e;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode h1,
+body.dark-mode .qr-card-title,
+body.dark-mode .info-group span,
+body.dark-mode label {
+    color: #ecf0f1;
+}
+
+body.dark-mode .container::before,
+body.dark-mode h1::after {
+    background: linear-gradient(90deg, #64b5f6, #ff8a65);
+}
+
+body.dark-mode .qrcode-display-area {
+    background: #34495e; /* Cor de fundo para a área de exibição do QR code no modo escuro */
+    border: none; /* Sem borda no modo escuro para visual limpo */
+}
+
+body.dark-mode .qr-image-container img,
+body.dark-mode .info-group i {
+    filter: brightness(1.2);
+}
+
+body.dark-mode input,
+body.dark-mode select {
+    background-color: #44647e;
+    border-color: #557c9e;
+    color: #ecf0f1;
+}
+
+body.dark-mode input:focus,
+body.dark-mode select:focus {
+    border-color: #64b5f6;
+    box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.2);
+}
+
+body.dark-mode input::placeholder {
+    color: #bdc3c7;
+}
+
+body.dark-mode button {
+    background: linear-gradient(135deg, #64b5f6, #42a5f5);
+    box-shadow: 0 4px 12px rgba(100, 181, 246, 0.2);
+}
+
+body.dark-mode .scan-instructions,
+body.dark-mode .qrcode-placeholder p {
+    color: #bdc3c7;
+}
+
+body.dark-mode .error-message-area {
+    background: #557c9e;
+    color: #fce4ec;
+}
+
+body.dark-mode .error-message-area i {
+    color: #ff8a65;
+}
+
+body.dark-mode .main-header {
+    background: linear-gradient(90deg, #42a5f5, #64b5f6); /* Gradiente azul mais claro para o cabeçalho no modo escuro */
+}
+
+body.dark-mode .theme-toggle-button {
+    color: #ecf0f1;
+}
+
+body.dark-mode .qrcode-placeholder i,
+body.dark-mode .qrcode-placeholder p {
+    color: #bdc3c7; /* Texto/ícone mais claro no modo escuro */
+}
+
+body.dark-mode .qr-image-container {
+    background: #34495e; /* Cor de fundo para o contêiner no modo escuro */
+}
+
+/* Estilos do Botão de Impressão */
+.print-button {
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    width: 100%;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1.5rem; /* Espaço acima do botão de impressão */
+}
+
+.download-button {
+    background: linear-gradient(135deg, #f39c12, #e67e22); /* Laranja vibrante */
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    width: 100%;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.5rem; /* Espaço acima do botão de download, se separado */
+}
+
+.print-button:hover,
+.download-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.print-button:active,
+.download-button:active {
+    transform: translateY(0);
+}
+
+/* Contêiner para agrupar os botões de ação */
+.action-buttons-container {
+    display: flex;
+    flex-direction: column; /* Botões empilhados por padrão */
+    gap: 0.5rem; /* Espaçamento entre os botões */
+    width: 100%;
+    margin-top: 1.5rem; /* Espaço acima do grupo de botões */
+}
+
+/* Adaptação para telas maiores: botões lado a lado */
+@media (min-width: 600px) {
+    .action-buttons-container {
+        flex-direction: row; /* Botões lado a lado em telas maiores */
+        justify-content: space-between;
+    }
+    .print-button, .download-button {
+        width: 48%; /* Dividir a largura para caber dois botões */
+        margin-top: 0; /* Remover margem superior individual */
+    }
+}
+
+/* Estilos do Modo Escuro para os Botões */
+body.dark-mode .print-button {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+}
+
+body.dark-mode .download-button {
+    background: linear-gradient(135deg, #ffa726, #ff9800); /* Laranja mais claro no modo escuro */
+    box-shadow: 0 4px 12px rgba(255, 167, 38, 0.2);
+}
+
+/* Estilos de Impressão (Folha A4) */
+@page {
+    size: A4; /* Define o tamanho da página como A4 */
+    margin: 1cm; /* Margens de 1cm em todos os lados */
+}
+
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        background: white !important; /* Força fundo branco na impressão */
+        color: #000; /* Forçar cor de texto preta para impressão */
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .main-header, /* Esconder o cabeçalho */
+    .container::before, /* Esconder a linha decorativa do contêiner */
+    .form-group, /* Esconder o formulário */
+    .action-buttons-container, /* Esconder botões de ação */
+    #errorMessageArea, /* Esconder a área de erro */
+    .qrcode-placeholder, /* Esconder o placeholder quando imprimir */
+    script, /* Esconder tags de script */
+    style, /* Esconder tags de estilo */
+    .theme-toggle-button, /* Esconder botão de tema */
+    h1 /* Esconder o título principal */
+     {
+        display: none !important;
+    }
+
+    .container {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        box-shadow: none; /* Remover sombra do container principal se houver */
+        border-radius: 0; /* Remover borda arredondada do container principal */
+        overflow: visible;
+        background: none; /* Remover background do container principal */
+    }
+
+    .qrcode-display-area {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+        display: block !important;
+    }
+
+    .qr-image-container {
+        width: 100%;
+        max-width: 18cm; /* Ajustado para caber bem na A4 com margens */
+        background: white !important; /* Força fundo branco para a caixa do QR */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important; /* Garante a sombra */
+        border-radius: 12px !important; /* Garante as bordas arredondadas */
+        padding: 2rem !important; /* Garante o preenchimento */
+        margin: 1cm auto !important; /* Centraliza na página de impressão */
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        page-break-inside: avoid; /* Evitar quebra de página dentro do cartão */
+    }
+
+    .qr-image-container img {
+        max-width: 10cm; /* Definir o tamanho do QR code para impressão */
+        width: auto;
+        margin: 0 0 1cm 0; /* Margem inferior para espaçamento do texto */
+    }
+
+    .qr-card-title {
+        font-size: 1.8rem; /* Tamanho maior para o título na impressão */
+        font-weight: bold;
+        color: #000; /* Cor preta para impressão */
+        margin-bottom: 0.5cm;
+    }
+
+    .scan-instructions {
+        font-size: 1.1rem; /* Tamanho maior para instruções na impressão */
+        color: #000;
+        margin-bottom: 1cm;
+    }
+
+    .network-details-inline {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        border-top: none; /* Remover linha separadora */
+        text-align: center; /* Centralizar texto de detalhes */
+    }
+
+    .info-group {
+        display: flex;
+        flex-direction: column; /* Empilhar rótulo e valor na impressão */
+        align-items: center; /* Centralizar itens do grupo */
+        padding: 0.5cm 0;
+        border-bottom: none; /* Remover linhas entre os grupos */
+    }
+
+    .info-group i {
+        display: none !important; /* Esconder ícones na impressão */
+    }
+
+    .info-group span {
+        font-size: 1.3rem;
+        color: #000;
+        font-weight: 600;
+        text-align: center;
+        display: block;
+    }
+
+    /* Para garantir que o forte seja aplicado no span e não como um novo elemento */
+    .info-group span strong {
+        font-weight: bold;
+    }
+} 

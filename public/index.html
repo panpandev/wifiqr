@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi QR Code Generator | Profissional</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <button id="theme-toggle" class="theme-toggle-button" title="Alternar modo escuro/claro">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+    <div class="container">
+        <h1><i class="fas fa-wifi"></i> Gerador de QR Code WiFi</h1>
+        
+        <!-- QR Code Display Area -->
+        <div id="qrcode-display-area" class="qrcode-display-area">
+            <div class="qrcode-placeholder">
+                <i class="fas fa-qrcode"></i>
+                <p>Preencha os dados abaixo para gerar o QR Code</p>
+            </div>
+            
+            <div id="qrCodeImageContainer" class="qr-image-container hidden">
+                <h2 class="qr-card-title">QR Code WiFi</h2>
+                <img id="qrCodeImage" src="" alt="QR Code WiFi">
+                
+                <p class="scan-instructions">
+                    <i class="fas fa-info-circle"></i>
+                    Escaneie este QR Code com seu smartphone para conectar à rede WiFi
+                </p>
+
+                <!-- Network Info Section - Moved Inline -->
+                <div id="networkDetailsInline" class="network-details-inline hidden">
+                    <div class="info-group">
+                        <i class="fas fa-network-wired"></i>
+                        <span id="networkName">-</span>
+                    </div>
+                    <div class="info-group">
+                        <i class="fas fa-key"></i>
+                        <span id="networkPassword">-</span>
+                    </div>
+                </div>
+                
+                <div class="action-buttons-container">
+                    <button id="printQrButton" class="print-button hidden">
+                        <i class="fas fa-print"></i> Imprimir QR Code
+                    </button>
+                    <button id="downloadPngButton" class="download-button hidden">
+                        <i class="fas fa-download"></i> Baixar PNG
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Message Display Area -->
+            <div id="errorMessageArea" class="error-message-area hidden">
+                <!-- Error messages will be inserted here dynamically -->
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <form id="wifiForm">
+            <div class="form-group">
+                <label for="ssid">
+                    <i class="fas fa-network-wired"></i>
+                    Nome da Rede (SSID)
+                </label>
+                <input type="text" id="ssid" name="ssid" placeholder="Digite o nome da sua rede WiFi" required>
+            </div>
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-key"></i>
+                    Senha
+                </label>
+                <input type="password" id="password" name="password" placeholder="Digite a senha da rede" required>
+            </div>
+            <div class="form-group">
+                <label for="encryption">
+                    <i class="fas fa-shield-alt"></i>
+                    Tipo de Criptografia
+                </label>
+                <select id="encryption" name="encryption" required>
+                    <option value="WPA">WPA/WPA2</option>
+                    <option value="nopass">Sem Senha</option>
+                </select>
+            </div>
+            <button type="submit">
+                <i class="fas fa-qrcode"></i>
+                Gerar QR Code
+            </button>
+        </form>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
