@@ -34,7 +34,7 @@ Um aplicativo web elegante e intuitivo para gerar QR Codes de redes WiFi, permit
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/serversync/wifiqr.git
+git clone https://github.com/panpandev/wifiqr.git
 ```
 
 2. Entre no diretório do projeto:
